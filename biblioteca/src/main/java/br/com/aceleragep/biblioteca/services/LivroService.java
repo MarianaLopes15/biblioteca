@@ -28,7 +28,13 @@ public class LivroService {
 	}
 
 	public List<LivroEntity> listaTodos() {
-		return livroRepository.findAll();
+		List<LivroEntity> encontrou = livroRepository.findAll();
+		if (!encontrou.isEmpty()) {
+			return encontrou;
+		} else {
+			throw new NotFoundBussinessException("Nenhum livro encontrado");
+		}
+
 	}
 
 	public LivroEntity buscaLivroPeloId(Long id) {

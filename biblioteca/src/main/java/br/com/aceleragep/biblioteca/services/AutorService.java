@@ -25,7 +25,12 @@ public class AutorService {
 	}
 
 	public List<AutorEntity> listaTodos() {
-		return autorRepository.findAll();
+		List<AutorEntity> encontrou = autorRepository.findAll();
+		if (!encontrou.isEmpty()) {
+			return encontrou;
+		} else {
+			throw new NotFoundBussinessException("Nenhum autor encontrado");
+		}
 	}
 
 	public AutorEntity buscaPeloId(Long id) {
