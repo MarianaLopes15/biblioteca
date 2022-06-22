@@ -36,4 +36,8 @@ public class LivroService {
 				.orElseThrow(() -> new NotFoundBussinessException(String.format("Livro %d não encontrado", id)));
 	}
 
+	public List<LivroEntity> buscaLivrosPeloIdAutor(Long id) {
+		return livroRepository.findAllByAutoresId(id);
+	}
+
 }

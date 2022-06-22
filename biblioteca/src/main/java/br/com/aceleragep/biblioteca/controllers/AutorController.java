@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.aceleragep.biblioteca.configs.ControllerConfig;
 import br.com.aceleragep.biblioteca.converts.AutorConvert;
-
+import br.com.aceleragep.biblioteca.converts.LivroConvert;
 import br.com.aceleragep.biblioteca.dtos.inputs.AutorInput;
 import br.com.aceleragep.biblioteca.dtos.outputs.AutorOutput;
-
+import br.com.aceleragep.biblioteca.dtos.outputs.LivroSemAutorOutput;
 import br.com.aceleragep.biblioteca.entities.AutorEntity;
+import br.com.aceleragep.biblioteca.entities.LivroEntity;
 import br.com.aceleragep.biblioteca.services.AutorService;
+import br.com.aceleragep.biblioteca.services.LivroService;
 
 @RestController
 @RequestMapping(ControllerConfig.PRE_URL + "/autores")
@@ -31,6 +33,13 @@ public class AutorController {
 
 	@Autowired
 	private AutorConvert autorConvert;
+	
+	@Autowired
+	private LivroService livroService;
+
+	@Autowired
+	private LivroConvert livroConvert;
+	
 
 	@PostMapping
 	public AutorOutput cria(@RequestBody @Valid AutorInput autorInput) {
@@ -58,5 +67,13 @@ public class AutorController {
 		AutorEntity autorEncontrado = autorService.buscaPeloId(id);
 		return autorConvert.entityToOutput(autorEncontrado);
 	}
+	
+	@GetMapping("/{id}/livros")
+	public List<LivroSemAutorOutput> buscaLivroPeloIdDoAutor(@PathVariable Long id) {
+		autorService.buscaPeloId(id);
+		List<LivroEntity> livros = livroService.buscaLivrosPeloIdAutor(id);
+		return livroConvert.entityToSemAutorOutput(livros);
+	}
+
 
 }
