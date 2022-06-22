@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.aceleragep.biblioteca.entities.AutorEntity;
+import br.com.aceleragep.biblioteca.exceptions.NotFoundBussinessException;
 import br.com.aceleragep.biblioteca.repositories.AutorRepository;
 
 @Service
@@ -32,7 +33,7 @@ public class AutorService {
 		if (encontrou.isPresent()) {
 			return encontrou.get();
 		} else {
-			throw new RuntimeException("Autor " + id + " não encontrado");
+			throw new NotFoundBussinessException("Autor " + id + " não encontrado");
 		}
 	}
 

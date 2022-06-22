@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.aceleragep.biblioteca.entities.LivroEntity;
+import br.com.aceleragep.biblioteca.exceptions.NotFoundBussinessException;
 import br.com.aceleragep.biblioteca.repositories.LivroRepository;
 
 @Service
@@ -32,7 +33,7 @@ public class LivroService {
 
 	public LivroEntity buscaLivroPeloId(Long id) {
 		return livroRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException(String.format("Livro %d não encontrado", id)));
+				.orElseThrow(() -> new NotFoundBussinessException(String.format("Livro %d não encontrado", id)));
 	}
 
 }
