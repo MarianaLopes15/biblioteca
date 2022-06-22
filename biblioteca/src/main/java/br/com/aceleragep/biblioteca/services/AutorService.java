@@ -27,7 +27,7 @@ public class AutorService {
 	public List<AutorEntity> listaTodos() {
 		return autorRepository.findAll();
 	}
-	
+
 	public AutorEntity buscaPeloId(Long id) {
 		Optional<AutorEntity> encontrou = autorRepository.findById(id);
 		if (encontrou.isPresent()) {

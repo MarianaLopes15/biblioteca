@@ -33,13 +33,12 @@ public class AutorController {
 
 	@Autowired
 	private AutorConvert autorConvert;
-	
+
 	@Autowired
 	private LivroService livroService;
 
 	@Autowired
 	private LivroConvert livroConvert;
-	
 
 	@PostMapping
 	public AutorOutput cria(@RequestBody @Valid AutorInput autorInput) {
@@ -67,13 +66,12 @@ public class AutorController {
 		AutorEntity autorEncontrado = autorService.buscaPeloId(id);
 		return autorConvert.entityToOutput(autorEncontrado);
 	}
-	
+
 	@GetMapping("/{id}/livros")
 	public List<LivroSemAutorOutput> buscaLivroPeloIdDoAutor(@PathVariable Long id) {
 		autorService.buscaPeloId(id);
 		List<LivroEntity> livros = livroService.buscaLivrosPeloIdAutor(id);
 		return livroConvert.entityToSemAutorOutput(livros);
 	}
-
 
 }

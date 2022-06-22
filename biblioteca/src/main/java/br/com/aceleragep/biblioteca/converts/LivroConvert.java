@@ -56,11 +56,11 @@ public class LivroConvert {
 		}
 		livroEntity.setAutores(autores);
 	}
-	
+
 	public LivroSemAutorOutput entityToSemAutorOutput(LivroEntity livroEntity) {
 		return modelMapper.map(livroEntity, LivroSemAutorOutput.class);
 	}
-	
+
 	public List<LivroSemAutorOutput> entityToSemAutorOutput(List<LivroEntity> livros) {
 		return livros.stream().map(livroEntity -> {
 			return entityToSemAutorOutput(livroEntity);

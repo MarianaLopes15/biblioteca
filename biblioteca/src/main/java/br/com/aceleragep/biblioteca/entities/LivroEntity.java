@@ -25,7 +25,7 @@ public class LivroEntity {
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "titulo" , length = 200)
+	@Column(name = "titulo", length = 200)
 	private String titulo;
 
 	@Column(name = "ano_lancamento")
