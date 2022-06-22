@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import br.com.aceleragep.biblioteca.dtos.inputs.LivroInput;
 import br.com.aceleragep.biblioteca.dtos.outputs.LivroOutput;
-import br.com.aceleragep.biblioteca.dtos.outputs.LivroSemAutorOutput;
+import br.com.aceleragep.biblioteca.dtos.outputs.LivroAutorOutput;
 import br.com.aceleragep.biblioteca.entities.AutorEntity;
 import br.com.aceleragep.biblioteca.entities.LivroEntity;
 import br.com.aceleragep.biblioteca.services.AutorService;
@@ -57,11 +57,11 @@ public class LivroConvert {
 		livroEntity.setAutores(autores);
 	}
 
-	public LivroSemAutorOutput entityToSemAutorOutput(LivroEntity livroEntity) {
-		return modelMapper.map(livroEntity, LivroSemAutorOutput.class);
+	public LivroAutorOutput entityToSemAutorOutput(LivroEntity livroEntity) {
+		return modelMapper.map(livroEntity, LivroAutorOutput.class);
 	}
 
-	public List<LivroSemAutorOutput> entityToSemAutorOutput(List<LivroEntity> livros) {
+	public List<LivroAutorOutput> entityToSemAutorOutput(List<LivroEntity> livros) {
 		return livros.stream().map(livroEntity -> {
 			return entityToSemAutorOutput(livroEntity);
 		}).collect(Collectors.toList());

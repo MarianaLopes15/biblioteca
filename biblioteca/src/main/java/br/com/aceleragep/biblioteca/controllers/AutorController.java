@@ -18,7 +18,7 @@ import br.com.aceleragep.biblioteca.converts.AutorConvert;
 import br.com.aceleragep.biblioteca.converts.LivroConvert;
 import br.com.aceleragep.biblioteca.dtos.inputs.AutorInput;
 import br.com.aceleragep.biblioteca.dtos.outputs.AutorOutput;
-import br.com.aceleragep.biblioteca.dtos.outputs.LivroSemAutorOutput;
+import br.com.aceleragep.biblioteca.dtos.outputs.LivroAutorOutput;
 import br.com.aceleragep.biblioteca.entities.AutorEntity;
 import br.com.aceleragep.biblioteca.entities.LivroEntity;
 import br.com.aceleragep.biblioteca.services.AutorService;
@@ -68,7 +68,7 @@ public class AutorController {
 	}
 
 	@GetMapping("/{id}/livros")
-	public List<LivroSemAutorOutput> buscaLivroPeloIdDoAutor(@PathVariable Long id) {
+	public List<LivroAutorOutput> buscaLivroPeloIdDoAutor(@PathVariable Long id) {
 		autorService.buscaPeloId(id);
 		List<LivroEntity> livros = livroService.buscaLivrosPeloIdAutor(id);
 		return livroConvert.entityToSemAutorOutput(livros);
