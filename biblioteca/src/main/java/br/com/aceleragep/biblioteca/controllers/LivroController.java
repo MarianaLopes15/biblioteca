@@ -1,10 +1,12 @@
 package br.com.aceleragep.biblioteca.controllers;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,9 +65,10 @@ public class LivroController {
 	}
 
 	@GetMapping
-	public List<LivroOutput> listaTodos() {
-		List<LivroEntity> livrosLocalizados = livroService.listaTodos();
-		return livroConvert.entityToOutput(livrosLocalizados);
+	public Page<LivroOutput> listaTodos(@PageableDefault(page = 0, size = 5, sort = "titulo", direction = Direction.ASC) Pageable paginacao,
+			String titulo) {
+		Page<LivroEntity> livrosLocalizados = livroService.listaTodos(paginacao);
+		return livroConvert.listPageEntityToListPageOutput(livrosLocalizados);
 	}
 
 }

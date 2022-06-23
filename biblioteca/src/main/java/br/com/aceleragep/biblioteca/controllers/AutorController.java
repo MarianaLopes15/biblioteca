@@ -1,10 +1,12 @@
 package br.com.aceleragep.biblioteca.controllers;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,9 +58,11 @@ public class AutorController {
 	}
 
 	@GetMapping
-	public List<AutorOutput> listaTodos() {
-		List<AutorEntity> listaTodos = autorService.listaTodos();
-		return autorConvert.entityToOutput(listaTodos);
+	public Page<AutorOutput> listaTodos(
+			@PageableDefault(page = 0, size = 5, sort = "nome", direction = Direction.ASC) Pageable paginacao,
+			String nome) {
+		Page<AutorEntity> listaTodos = autorService.listaTodos(paginacao);
+		return autorConvert.listPageEntityToListPageOutput(listaTodos);
 	}
 
 	@GetMapping("/{id}")
@@ -68,10 +72,12 @@ public class AutorController {
 	}
 
 	@GetMapping("/{id}/livros")
-	public List<LivroAutorOutput> buscaLivroPeloIdDoAutor(@PathVariable Long id) {
+	public Page<LivroAutorOutput> buscaLivroPeloIdDoAutor(@PathVariable Long id,
+			@PageableDefault(page = 0, size = 5, sort = "titulo", direction = Direction.ASC) Pageable paginacao,
+			String titulo) {
 		autorService.buscaPeloId(id);
-		List<LivroEntity> livros = livroService.buscaLivrosPeloIdAutor(id);
-		return livroConvert.entityToSemAutorOutput(livros);
+		Page<LivroEntity> livros = livroService.buscaLivrosPeloIdAutor(id, paginacao);
+		return livroConvert.listPageEntityToListPageOutputCopy(livros);
 	}
 
 }

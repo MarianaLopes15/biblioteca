@@ -1,8 +1,8 @@
 package br.com.aceleragep.biblioteca.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.aceleragep.biblioteca.entities.LivroEntity;
@@ -27,8 +27,8 @@ public class LivroService {
 		livroRepository.delete(livroLocalizado);
 	}
 
-	public List<LivroEntity> listaTodos() {
-		List<LivroEntity> encontrou = livroRepository.findAll();
+	public Page<LivroEntity> listaTodos(Pageable paginacao) {
+		Page<LivroEntity> encontrou = livroRepository.findAll(paginacao);
 		if (!encontrou.isEmpty()) {
 			return encontrou;
 		} else {
@@ -42,8 +42,8 @@ public class LivroService {
 				.orElseThrow(() -> new NotFoundBussinessException(String.format("Livro %d não encontrado", id)));
 	}
 
-	public List<LivroEntity> buscaLivrosPeloIdAutor(Long id) {
-		return livroRepository.findAllByAutoresId(id);
+	public Page<LivroEntity> buscaLivrosPeloIdAutor(Long id, Pageable paginacao) {
+		return livroRepository.findAllByAutoresId(id, paginacao);
 	}
 
 }
