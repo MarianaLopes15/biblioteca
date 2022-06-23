@@ -2,6 +2,7 @@ package br.com.aceleragep.biblioteca.dtos.inputs;
 
 import java.util.List;
 
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -15,6 +16,7 @@ public class LivroInput {
 	@NotNull(message = "Titulo é obrigatório!")
 	private String titulo;
 
+	@DecimalMax("9999")
 	@NotNull(message = "Ano Lançamento é obrigatório!")
 	private Integer anoLancamento;
 

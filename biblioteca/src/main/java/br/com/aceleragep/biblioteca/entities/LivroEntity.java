@@ -12,8 +12,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.Length;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,14 +29,11 @@ public class LivroEntity {
 	@Column(name = "titulo", length = 200)
 	private String titulo;
 
-	@Length(max = 4)
-	@Column(name = "ano_lancamento")
+	@Column(name = "ano_lancamento", columnDefinition = "integer(4)")
 	private Integer anoLancamento;
 
 	@JoinColumn(name = "autor_id")
 	@ManyToMany
-	@JoinTable(name="tb_livros_autores", joinColumns = @JoinColumn(name="livro_id"),
-	inverseJoinColumns = @JoinColumn(name="autor_id")
-	)
+	@JoinTable(name = "tb_livros_autores", joinColumns = @JoinColumn(name = "livro_id"), inverseJoinColumns = @JoinColumn(name = "autor_id"))
 	private List<AutorEntity> autores;
 }
