@@ -1,9 +1,10 @@
 package br.com.aceleragep.biblioteca.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.aceleragep.biblioteca.entities.AutorEntity;
@@ -24,8 +25,8 @@ public class AutorService {
 		return autorRepository.save(autorEntity);
 	}
 
-	public List<AutorEntity> listaTodos() {
-		List<AutorEntity> encontrou = autorRepository.findAll();
+	public Page<AutorEntity> listaTodos(Pageable paginacao) {
+		Page<AutorEntity> encontrou = autorRepository.findAll(paginacao);
 		if (!encontrou.isEmpty()) {
 			return encontrou;
 		} else {

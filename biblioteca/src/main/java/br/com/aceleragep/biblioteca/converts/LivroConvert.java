@@ -8,6 +8,9 @@ import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import br.com.aceleragep.biblioteca.dtos.inputs.LivroInput;
@@ -35,6 +38,11 @@ public class LivroConvert {
 	public LivroOutput entityToOutput(LivroEntity livroEntity) {
 		return modelMapper.map(livroEntity, LivroOutput.class);
 	}
+	
+	public Page<LivroOutput> listPageEntityToListPageOutput(
+			Page<LivroEntity> livrosLocalizados) {
+		return livrosLocalizados.map(this::entityToOutput);
+	}
 
 	public void copyInputToEntity(LivroEntity livroLocalizado, @Valid LivroInput livroInput) {
 		modelMapper.map(livroInput, livroLocalizado);
@@ -42,10 +50,10 @@ public class LivroConvert {
 
 	}
 
-	public List<LivroOutput> entityToOutput(List<LivroEntity> livrosLocalizados) {
-		return livrosLocalizados.stream().map(livroEntity -> {
+	public Page<LivroOutput> entityToOutput(Page<LivroEntity> livrosLocalizados, Pageable paginacao) {
+		return new PageImpl<>(livrosLocalizados.stream().map(livroEntity -> {
 			return entityToOutput(livroEntity);
-		}).collect(Collectors.toList());
+		}).collect(Collectors.toList()));
 	}
 
 	private void converteIdsAutorParaAutores(LivroInput livroInput, LivroEntity livroEntity) {
@@ -61,10 +69,14 @@ public class LivroConvert {
 		return modelMapper.map(livroEntity, LivroAutorOutput.class);
 	}
 
-	public List<LivroAutorOutput> entityToSemAutorOutput(List<LivroEntity> livros) {
-		return livros.stream().map(livroEntity -> {
+	public Page<LivroAutorOutput> entityToSemAutorOutput(Page<LivroEntity> livros, Pageable paginacao) {
+		return new PageImpl<>(livros.stream().map(livroEntity -> {
 			return entityToSemAutorOutput(livroEntity);
-		}).collect(Collectors.toList());
+		}).collect(Collectors.toList()));
+	}
+
+	public Page<LivroAutorOutput> listPageEntityToListPageOutputCopy(Page<LivroEntity> livros) {
+		return livros.map(this::entityToSemAutorOutput);
 	}
 
 }
