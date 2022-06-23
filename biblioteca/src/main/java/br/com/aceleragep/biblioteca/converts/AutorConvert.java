@@ -28,9 +28,8 @@ public class AutorConvert {
 	public AutorOutput entityToOutput(AutorEntity autorEntity) {
 		return modelMapper.map(autorEntity, AutorOutput.class);
 	}
-	
-	public Page<AutorOutput> listPageEntityToListPageOutput(
-			Page<AutorEntity> livros) {
+
+	public Page<AutorOutput> listPageEntityToListPageOutput(Page<AutorEntity> livros) {
 		return livros.map(this::entityToOutput);
 	}
 

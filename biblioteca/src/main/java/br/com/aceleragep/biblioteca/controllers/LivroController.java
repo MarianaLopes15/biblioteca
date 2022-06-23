@@ -24,6 +24,12 @@ import br.com.aceleragep.biblioteca.dtos.inputs.LivroInput;
 import br.com.aceleragep.biblioteca.dtos.outputs.LivroOutput;
 import br.com.aceleragep.biblioteca.entities.LivroEntity;
 import br.com.aceleragep.biblioteca.services.LivroService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @RestController
 @RequestMapping(ControllerConfig.PRE_URL + "/livros")
@@ -34,6 +40,11 @@ public class LivroController {
 
 	@Autowired
 	private LivroService livroService;
+
+	@Operation(parameters = {
+			@Parameter(in = ParameterIn.QUERY, description = "Paginas a ser carregada", name = "page", content = @Content(schema = @Schema(type = "integer", defaultValue = "0"))),
+			@Parameter(in = ParameterIn.QUERY, description = "Quantidade de registros", name = "size", content = @Content(schema = @Schema(type = "integer", defaultValue = "5"))),
+			@Parameter(in = ParameterIn.QUERY, description = "Ordenacao dos registros", name = "sort", content = @Content(array = @ArraySchema(schema = @Schema(type = "string")))) })
 
 	@ResponseStatus(code = HttpStatus.CREATED)
 	@PostMapping
@@ -65,8 +76,8 @@ public class LivroController {
 	}
 
 	@GetMapping
-	public Page<LivroOutput> listaTodos(@PageableDefault(page = 0, size = 5, sort = "titulo", direction = Direction.ASC) Pageable paginacao,
-			String titulo) {
+	public Page<LivroOutput> listaTodos(
+			@PageableDefault(sort = "titulo", direction = Direction.ASC, page = 0, size = 10) @Parameter(hidden = true) Pageable paginacao) {
 		Page<LivroEntity> livrosLocalizados = livroService.listaTodos(paginacao);
 		return livroConvert.listPageEntityToListPageOutput(livrosLocalizados);
 	}
