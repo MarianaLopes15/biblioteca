@@ -14,8 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import br.com.aceleragep.biblioteca.dtos.inputs.LivroInput;
-import br.com.aceleragep.biblioteca.dtos.outputs.LivroOutput;
 import br.com.aceleragep.biblioteca.dtos.outputs.LivroAutorOutput;
+import br.com.aceleragep.biblioteca.dtos.outputs.LivroOutput;
 import br.com.aceleragep.biblioteca.entities.AutorEntity;
 import br.com.aceleragep.biblioteca.entities.LivroEntity;
 import br.com.aceleragep.biblioteca.services.AutorService;
@@ -38,9 +38,8 @@ public class LivroConvert {
 	public LivroOutput entityToOutput(LivroEntity livroEntity) {
 		return modelMapper.map(livroEntity, LivroOutput.class);
 	}
-	
-	public Page<LivroOutput> listPageEntityToListPageOutput(
-			Page<LivroEntity> livrosLocalizados) {
+
+	public Page<LivroOutput> listPageEntityToListPageOutput(Page<LivroEntity> livrosLocalizados) {
 		return livrosLocalizados.map(this::entityToOutput);
 	}
 
