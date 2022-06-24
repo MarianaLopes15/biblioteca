@@ -24,6 +24,6 @@ public class AutorEntity {
 	@Column(name = "nome", length = 100)
 	private String nome;
 
-	@Column(name = "bibliografia", length = 100)
+	@Column(name = "bibliografia", length = 1000)
 	private String bibliografia;
 }

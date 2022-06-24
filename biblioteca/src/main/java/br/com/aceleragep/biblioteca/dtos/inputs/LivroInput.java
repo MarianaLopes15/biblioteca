@@ -3,6 +3,7 @@ package br.com.aceleragep.biblioteca.dtos.inputs;
 import java.util.List;
 
 import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -13,7 +14,7 @@ import lombok.Setter;
 @Setter
 public class LivroInput {
 
-	@NotNull(message = "Titulo é obrigatório!")
+	@NotBlank(message = "Titulo é obrigatório!")
 	private String titulo;
 
 	@DecimalMax("9999")

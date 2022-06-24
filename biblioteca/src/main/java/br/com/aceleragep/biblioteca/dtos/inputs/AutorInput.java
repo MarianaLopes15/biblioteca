@@ -1,6 +1,8 @@
 package br.com.aceleragep.biblioteca.dtos.inputs;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,9 +11,10 @@ import lombok.Setter;
 @Setter
 public class AutorInput {
 
-	@NotNull(message = "Nome é obrigatório!")
+	@NotBlank(message = "Nome é obrigatório!")
 	private String nome;
 
-	@NotNull(message = "Bibliografia é obrigatória!")
+	@Length(max = 1000)
+	@NotBlank(message = "Bibliografia é obrigatória!")
 	private String bibliografia;
 }
