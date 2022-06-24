@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class LivroAutorOutput {
 	private Long id;
-
 	private String titulo;
-
 	private Integer anoLancamento;
 }
