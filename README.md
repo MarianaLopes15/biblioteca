@@ -35,6 +35,8 @@ Para isso, na tela incial da IDE no 'Project Explorer' clique com o botão direi
 - Selecione 'Existing Maven Projects' e next
 - Clique em 'Browse..' e procure o local onde o projeto está e o selecione (Caso o projeto seja baixado via zip, é necessário extraí-lo antes de procurá-lo)
 - Por fim clique em Finish
+- Também é necessário configurar a biblioteca Lombok na IDE
+- Utilize as configurações do arquivo application.properties para configurar o banco de dados
 
 O Eclipse deve baixar algumas dependencias para configurar o projeto, aguarde até finalizar. Ao finalizar, você pode executar a aplicação 🏆 
 
