@@ -27,11 +27,8 @@ public class AutorService {
 
 	public Page<AutorEntity> listaTodos(Pageable paginacao) {
 		Page<AutorEntity> encontrou = autorRepository.findAll(paginacao);
-		if (!encontrou.isEmpty()) {
-			return encontrou;
-		} else {
-			throw new NotFoundBussinessException("Nenhum autor encontrado");
-		}
+		return encontrou;
+
 	}
 
 	public AutorEntity buscaPeloId(Long id) {

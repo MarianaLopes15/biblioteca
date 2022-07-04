@@ -40,7 +40,7 @@ public class LivroController {
 	@PostMapping
 	public LivroOutput cria(@RequestBody @Valid LivroInput livroInput) {
 		LivroEntity livroEntity = livroConvert.inputToNewEntity(livroInput);
-		LivroEntity livroCriado = livroService.cria(livroEntity);
+		LivroEntity livroCriado = livroService.cria(livroEntity, livroInput);
 		return livroConvert.entityToOutput(livroCriado);
 	}
 
@@ -48,7 +48,7 @@ public class LivroController {
 	public LivroOutput alterar(@PathVariable Long id, @RequestBody @Valid LivroInput livroInput) {
 		LivroEntity livroLocalizado = livroService.buscaLivroPeloId(id);
 		livroConvert.copyInputToEntity(livroLocalizado, livroInput);
-		LivroEntity livroAlterado = livroService.altera(livroLocalizado);
+		LivroEntity livroAlterado = livroService.altera(livroLocalizado, livroInput);
 		return livroConvert.entityToOutput(livroAlterado);
 	}
 

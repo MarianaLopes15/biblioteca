@@ -1,7 +1,5 @@
 package br.com.aceleragep.biblioteca.converts;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -16,9 +14,7 @@ import org.springframework.stereotype.Component;
 import br.com.aceleragep.biblioteca.dtos.inputs.LivroInput;
 import br.com.aceleragep.biblioteca.dtos.outputs.LivroAutorOutput;
 import br.com.aceleragep.biblioteca.dtos.outputs.LivroOutput;
-import br.com.aceleragep.biblioteca.entities.AutorEntity;
 import br.com.aceleragep.biblioteca.entities.LivroEntity;
-import br.com.aceleragep.biblioteca.services.AutorService;
 
 @Component
 public class LivroConvert {
@@ -26,12 +22,9 @@ public class LivroConvert {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@Autowired
-	private AutorService autorService;
-
 	public LivroEntity inputToNewEntity(@Valid LivroInput livroInput) {
 		LivroEntity livroEntity = modelMapper.map(livroInput, LivroEntity.class);
-		converteIdsAutorParaAutores(livroInput, livroEntity);
+//		converteIdsAutorParaAutores(livroInput, livroEntity);
 		return livroEntity;
 	}
 
@@ -45,7 +38,7 @@ public class LivroConvert {
 
 	public void copyInputToEntity(LivroEntity livroLocalizado, @Valid LivroInput livroInput) {
 		modelMapper.map(livroInput, livroLocalizado);
-		converteIdsAutorParaAutores(livroInput, livroLocalizado);
+//		converteIdsAutorParaAutores(livroInput, livroLocalizado);
 
 	}
 
@@ -55,14 +48,13 @@ public class LivroConvert {
 		}).collect(Collectors.toList()));
 	}
 
-	private void converteIdsAutorParaAutores(LivroInput livroInput, LivroEntity livroEntity) {
-		List<AutorEntity> autores = new ArrayList<>();
-		for (Long idAutor : livroInput.getIdsAutores()) {
-			AutorEntity autor = autorService.buscaPeloId(idAutor);
-			autores.add(autor);
-		}
-		livroEntity.setAutores(autores);
-	}
+	/*
+	 * private void converteIdsAutorParaAutores(LivroInput livroInput, LivroEntity
+	 * livroEntity) { List<AutorEntity> autores = new ArrayList<>(); for (Long
+	 * idAutor : livroInput.getIdsAutores()) { AutorEntity autor =
+	 * autorService.buscaPeloId(idAutor); autores.add(autor); }
+	 * livroEntity.setAutores(autores); }
+	 */
 
 	public LivroAutorOutput entityToSemAutorOutput(LivroEntity livroEntity) {
 		return modelMapper.map(livroEntity, LivroAutorOutput.class);

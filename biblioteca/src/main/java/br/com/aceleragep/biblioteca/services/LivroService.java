@@ -1,10 +1,15 @@
 package br.com.aceleragep.biblioteca.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.aceleragep.biblioteca.dtos.inputs.LivroInput;
+import br.com.aceleragep.biblioteca.entities.AutorEntity;
 import br.com.aceleragep.biblioteca.entities.LivroEntity;
 import br.com.aceleragep.biblioteca.exceptions.NotFoundBussinessException;
 import br.com.aceleragep.biblioteca.repositories.LivroRepository;
@@ -15,11 +20,26 @@ public class LivroService {
 	@Autowired
 	private LivroRepository livroRepository;
 
-	public LivroEntity cria(LivroEntity livroEntity) {
+	@Autowired
+	private AutorService autorService;
+
+	public LivroEntity cria(LivroEntity livroEntity, LivroInput livroInput) {
+		List<AutorEntity> autores = new ArrayList<>();
+		for (Long idAutor : livroInput.getIdsAutores()) {
+			AutorEntity autor = autorService.buscaPeloId(idAutor);
+			autores.add(autor);
+		}
+		livroEntity.setAutores(autores);
 		return livroRepository.save(livroEntity);
 	}
 
-	public LivroEntity altera(LivroEntity livroEntity) {
+	public LivroEntity altera(LivroEntity livroEntity, LivroInput livroInput) {
+		List<AutorEntity> autores = new ArrayList<>();
+		for (Long idAutor : livroInput.getIdsAutores()) {
+			AutorEntity autor = autorService.buscaPeloId(idAutor);
+			autores.add(autor);
+		}
+		livroEntity.setAutores(autores);
 		return livroRepository.save(livroEntity);
 	}
 
@@ -29,12 +49,7 @@ public class LivroService {
 
 	public Page<LivroEntity> listaTodos(Pageable paginacao) {
 		Page<LivroEntity> encontrou = livroRepository.findAll(paginacao);
-		if (!encontrou.isEmpty()) {
-			return encontrou;
-		} else {
-			throw new NotFoundBussinessException("Nenhum livro encontrado");
-		}
-
+		return encontrou;
 	}
 
 	public LivroEntity buscaLivroPeloId(Long id) {

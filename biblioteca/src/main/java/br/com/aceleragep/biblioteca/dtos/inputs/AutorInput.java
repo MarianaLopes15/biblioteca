@@ -11,10 +11,11 @@ import lombok.Setter;
 @Setter
 public class AutorInput {
 
+	@Length(max = 100)
 	@NotBlank(message = "Nome é obrigatório!")
 	private String nome;
 
 	@Length(max = 1000)
-	@NotBlank(message = "Bibliografia é obrigatória!")
-	private String bibliografia;
+	@NotBlank(message = "Biografia é obrigatória!")
+	private String biografia;
 }

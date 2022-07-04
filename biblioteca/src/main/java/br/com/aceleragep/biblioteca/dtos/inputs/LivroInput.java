@@ -7,6 +7,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +16,7 @@ import lombok.Setter;
 @Setter
 public class LivroInput {
 
+	@Length(max = 200)
 	@NotBlank(message = "Titulo é obrigatório!")
 	private String titulo;
 
